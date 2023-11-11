@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruleta de Películas</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #roulette {
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            border: 2px solid #333;
+            border-radius: 50%;
+            position: relative;
+            transition: transform 2s ease-out; /* Ajusta la velocidad de giro */
+        }
+
+        #roulette:before {
+            content: "";
+            display: block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 150px 150px 0;
+            border-color: #333 transparent transparent transparent;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #movieImage img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        #spinButton {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: green;
+            color: white;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ruleta de Películas</h1>
+        <div id="roulette"></div>
+        <div id="movieImage"></div>
+        <button id="spinButton" onclick="spinWheel()">Girar</button>
+    </div>
+    <script>
+        const movies = [
+            { name: "Titanic", image: "titanic.jpg" },
+            { name: "The Shawshank Redemption", image: "shawshank.jpg" },
+            { name: "The Godfather", image: "godfather.jpg" },
+            { name: "Inception", image: "inception.jpg" },
+            { name: "Pulp Fiction", image: "pulpfiction.jpg" },
+            /* Agrega más películas aquí */ 
+            { name: "La La Land", image: "lalaland.jpg" }
+        ];
+
+        function spinWheel() {
+            const roulette = document.getElementById('roulette');
+            const movieImage = document.getElementById('movieImage');
+            const randomMovie = getRandomMovie();
+
+            // Establece una rotación de 360 grados para simular un giro de reloj
+            roulette.style.transform = `rotate(360deg)`;
+
+            setTimeout(() => {
+                alert(`¡La película seleccionada es: ${randomMovie.name}!`);
+                movieImage.innerHTML = `<img src="${randomMovie.image}" alt="${randomMovie.name}">`;
+                roulette.style.transition = 'none';
+                roulette.style.transform = 'rotate(0deg)';
+            }, 2000); // Reducción del tiempo de espera
+        }
+
+        function getRandomMovie() {
+            const randomIndex = Math.floor(Math.random() * movies.length);
+            return movies[randomIndex];
+        }
+    </script>
+</body>
+</html>
